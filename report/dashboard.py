@@ -1,4 +1,5 @@
 from fasthtml.common import *
+from matplotlib import cm
 import matplotlib.pyplot as plt
 
 # Import QueryBase, Employee, Team from employee_events
@@ -75,7 +76,15 @@ class Header(BaseComponent):
         # return a fasthtml H1 objects
         # containing the model's name attribute
         #### YOUR CODE HERE ####
-        return H1(model.name, cls='header-title')
+        if model.name == "employee":
+            title_text = "Employee Performance"
+        elif model.name == "team":
+            title_text = "Team Performance"
+        else:
+            title_text = "Performance Overview"  # default fallback
+
+        return H1(title_text, cls="header-title")
+        #return H1(model.name, cls='header-title')
         
           
 
@@ -206,7 +215,9 @@ class BarChart(MatplotlibViz):
     #### YOUR CODE HERE ####
     def visualization(self, asset_id, model):
 
-    
+        import matplotlib.cm as cm
+        import matplotlib.colors as mcolors
+
         # Using the model and asset_id arguments
         # pass the `asset_id` to the `.model_data` method
         # to receive the data that can be passed to the machine
@@ -241,7 +252,22 @@ class BarChart(MatplotlibViz):
 
         # Initialize a matplotlib subplot
         #### YOUR CODE HERE ####
-        fig, ax = plt.subplots(figsize=(10, 3))
+        fig, ax = plt.subplots(figsize=(10, 5))
+
+        # --- Color scale mapping ---
+        cmap = cm.get_cmap("RdYlGn_r")  # reversed so red=high, green=low
+        norm = mcolors.Normalize(vmin=0, vmax=1)
+        bar_color = cmap(norm(pred))
+
+        ax.barh([''], [pred], color=bar_color)
+        ax.set_xlim(0, 1)
+        ax.set_title('Predicted Recruitment Risk', fontsize=20)
+
+        # Add colorbar legend
+        sm = cm.ScalarMappable(cmap=cmap, norm=norm)
+        sm.set_array([])
+        cbar = plt.colorbar(sm, ax=ax, orientation="horizontal", fraction=0.12, pad=0.1)
+        cbar.set_label("Recruitment Risk Probability")
 
         
         # Run the following code unchanged
