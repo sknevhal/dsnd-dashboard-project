@@ -8,10 +8,10 @@ class BaseComponent:
     
 
     def component_data(self, entity_id, model):
-        raise NotImplemented
+        raise NotImplementedError
 
     def __call__(self, entity_id, model):
 
         component = self.build_component(entity_id, model)
-
+        
         return self.outer_div(component)

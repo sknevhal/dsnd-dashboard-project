@@ -4,7 +4,15 @@ matplotlib==3.9.2
 scipy==1.14.1
 numpy==2.1.2
 pandas==2.2.3
-pytest
-flake8
-ipython
-#### Add text to install the python-package here
+pytest==7.4.0
+flake8==5.0.4
+ipython==8.12.0
+#### Add text to install the python-package here ####
+sqlite3==3.41.0
+pathlib==1.0.1
+functools==3.12.0
+fastcore==1.5.29
+pip==23.0.1
+setuptools==67.6.1
+
+

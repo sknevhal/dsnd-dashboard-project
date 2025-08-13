@@ -21,6 +21,10 @@ def matplotlib2fasthtml(func):
     '''
     def wrapper(*args, **kwargs):
         # Reset the figure to prevent accumulation. Maybe we need a setting for this?
+        plt.clf()
+        plt.cla()
+        plt.close('all')
+
         fig = plt.figure()
 
         # Run function as normal
